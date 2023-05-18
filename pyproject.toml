@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "event_driven_ml_demo"
+version = "0.1.0"
+description = "Demo for event driven ML"
+authors = ["Natan Mish <natan.mish@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.9.7 || >3.9.7,<4.0"
+kafka-python = "^2.0.2"
+jupyterlab = "^3.6.3"
+streamlit = "^1.22.0"
+flask = "^2.3.2"
+black = "^23.3.0"
+river = "^0.16.0"
+seaborn = "^0.12.2"
+pillow = "^9.5.0"
