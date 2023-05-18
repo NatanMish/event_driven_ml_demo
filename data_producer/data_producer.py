@@ -20,7 +20,6 @@ def send_dataset_to_kafka(topic, dataset):
 
 
 def main(beta=2.5, n=100, std_dev=0.1):
-
     # Generate the dataset
     dataset = generate_dataset(beta, n, std_dev)
 
