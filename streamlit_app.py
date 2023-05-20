@@ -1,6 +1,6 @@
 import streamlit as st
-from data_producer.data_producer import generate_dataset, send_dataset_to_kafka
-from data_consumer.data_consumer import consume_data_points
+from online_learner_app.data_producer.data_producer import generate_dataset, send_dataset_to_kafka
+from online_learner_app.data_consumer.data_consumer import consume_data_points
 import datetime
 import pandas as pd
 import pickle as pkl
@@ -8,7 +8,6 @@ import requests
 
 
 def main():
-    # Set Kafka configurations
     topic = "data_points"  # Replace with your Kafka topic name
 
     st.title("Recently Received Data Points")
@@ -61,7 +60,7 @@ def main():
             ]
         )
 
-        result = requests.get("http://localhost:8000/")
+        result = requests.post("http://127.0.0.1:49259/batch", json={"messages": messages_consumed})
         print(result.text)
 
         dataset_size_placeholder.write(

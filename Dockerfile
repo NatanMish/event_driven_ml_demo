@@ -11,4 +11,6 @@ RUN poetry config virtualenvs.create false \
 # Copy the rest of the code
 COPY . /code/
 
-CMD ["uvicorn", "online_learner_app.fastapi_app:app", "--host", "0.0.0.0", "--port", "80"]
+EXPOSE 8000
+
+CMD ["uvicorn", "online_learner_app.fastapi_app:app", "--host", "0.0.0.0", "--port", "8000"]

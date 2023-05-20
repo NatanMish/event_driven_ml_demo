@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fast-api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fast-api
+  template:
+    metadata:
+      labels:
+        app: fast-api
+    spec:
+      containers:
+      - name: fast-api
+        image: natanmish/online_learner:2217
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+          - mountPath: /code
+            name: test-volume
+      volumes:
+        - name: test-volume
+          hostPath:
+            path: /Users/natanmish/Projects/event_driven_ml_demo
+            type: Directory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fast-api-service
+spec:
+  selector:
+    app: fast-api
+  ports:
+  - port: 8000
+    targetPort: 8000
+  type: LoadBalancer

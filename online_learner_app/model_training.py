@@ -1,28 +1,21 @@
 from river import linear_model, metrics
-from data_consumer.data_consumer import consume_data_points
 import pickle as pkl
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import os
 
 
-def main():
-    messages = [
-        x
-        for x in consume_data_points(
-            topic="data_points",
-            group_id="online_learner_app",
-            consumer_timeout_ms=10000,
-        )
-    ]
+def main(messages):
+    local_path = os.path.dirname(os.path.abspath(__file__))
 
     # check if model is available locally
     try:
-        with open("./temp_files/model.pkl", "rb") as f:
+        with open(os.path.join(local_path, "../temp_files/model.pkl"), "rb") as f:
             model = pkl.load(f)
-        with open("./temp_files/metric.pkl", "rb") as f:
+        with open(os.path.join(local_path, "../temp_files/metric.pkl"), "rb") as f:
             metric = pkl.load(f)
-        dataset = pd.read_csv("./temp_files/dataset.csv")
+        dataset = pd.read_csv(os.path.join(local_path, "../temp_files/dataset.csv"))
     except:
         model = linear_model.LinearRegression()
         metric = metrics.MAE()
@@ -43,16 +36,13 @@ def main():
         )
         model.learn_one({"x": float(msg.split(",")[0])}, float(msg.split(",")[1]))
 
-    # save model locally
-    with open("./temp_files/model.pkl", "wb") as f:
+    with open(os.path.join(local_path, "../temp_files/model.pkl"), "wb") as f:
         pkl.dump(model, f)
 
-    # save metric locally
-    with open("./temp_files/metric.pkl", "wb") as f:
+    with open(os.path.join(local_path, "../temp_files/metric.pkl"), "wb") as f:
         pkl.dump(metric, f)
 
-    # save dataset locally
-    dataset.to_csv("./temp_files/dataset.csv", index=False)
+    dataset.to_csv(os.path.join(local_path, "../temp_files/dataset.csv"), index=False)
 
     # Plot the linear regression line
     sns.lmplot(
@@ -63,7 +53,7 @@ def main():
         scatter_kws={"color": "blue"},
         line_kws={"color": "red"},
     )
-    plt.savefig("./temp_files/plot.png")
+    plt.savefig(os.path.join(local_path, "../temp_files/plot.png"))
 
     if len(dataset) == 0:
         return "No data points received yet, please generate some data points and try again!"
