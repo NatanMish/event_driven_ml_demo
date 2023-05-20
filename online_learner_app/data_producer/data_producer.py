@@ -12,8 +12,7 @@ def send_dataset_to_kafka(topic, dataset):
     producer = KafkaProducer(bootstrap_servers="localhost:9092")
 
     for x, y in zip(*dataset):
-        message = f"{x},{y}".encode("utf-8")
-        producer.send(topic, value=message)
+        producer.send(topic, value=f"{x},{y}".encode("utf-8"))
 
     producer.flush()
     producer.close()

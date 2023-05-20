@@ -14,11 +14,7 @@ spec:
     spec:
       containers:
       - name: fast-api
-        image: natanmish/online_learner:2217
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
+        image: natanmish/online_learner:1758
         ports:
         - containerPort: 8000
         volumeMounts:

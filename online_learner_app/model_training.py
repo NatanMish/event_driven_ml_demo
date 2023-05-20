@@ -22,19 +22,19 @@ def main(messages):
         dataset = pd.DataFrame(columns=["x", "y"])
 
     for msg in messages:
+        x = float(msg.split(",")[0])
+        y = float(msg.split(",")[1])
         dataset = pd.concat(
             [
                 dataset,
                 pd.DataFrame(
-                    [[float(msg.split(",")[0]), float(msg.split(",")[1])]],
+                    [[x, y]],
                     columns=["x", "y"],
                 ),
             ]
         )
-        metric.update(
-            float(msg.split(",")[1]), model.predict_one({"x": float(msg.split(",")[0])})
-        )
-        model.learn_one({"x": float(msg.split(",")[0])}, float(msg.split(",")[1]))
+        metric.update(y, model.predict_one({"x": x}))
+        model.learn_one({"x": x}, y)
 
     with open(os.path.join(local_path, "../temp_files/model.pkl"), "wb") as f:
         pkl.dump(model, f)

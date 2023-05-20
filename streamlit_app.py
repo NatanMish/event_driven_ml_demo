@@ -1,5 +1,8 @@
 import streamlit as st
-from online_learner_app.data_producer.data_producer import generate_dataset, send_dataset_to_kafka
+from online_learner_app.data_producer.data_producer import (
+    generate_dataset,
+    send_dataset_to_kafka,
+)
 from online_learner_app.data_consumer.data_consumer import consume_data_points
 import datetime
 import pandas as pd
@@ -8,20 +11,22 @@ import requests
 
 
 def main():
+    st.title("Online Model Training App")
+    st.image("app_diagram.png")
     topic = "data_points"  # Replace with your Kafka topic name
 
-    st.title("Recently Received Data Points")
+    st.header("Recently Received Data Points")
     time_placeholder = st.empty()
     messages_placeholder = st.empty()
     example_messages_placeholder = st.empty()
 
-    st.title("Online Linear Regression")
+    st.header("Online Linear Regression")
     image_placeholder = st.empty()
     dataset_size_placeholder = st.empty()
     beta_placeholder = st.empty()
     mae_placeholder = st.empty()
 
-    st.title("Dataset Generator")
+    st.header("Dataset Generator")
     st.write(
         "Enter the parameters below and click 'Generate Dataset' to create a dataset and send it to Kafka."
     )
@@ -60,7 +65,9 @@ def main():
             ]
         )
 
-        result = requests.post("http://127.0.0.1:49259/batch", json={"messages": messages_consumed})
+        result = requests.post(
+            "http://127.0.0.1:56489/batch", json={"messages": messages_consumed}
+        )
         print(result.text)
 
         dataset_size_placeholder.write(
