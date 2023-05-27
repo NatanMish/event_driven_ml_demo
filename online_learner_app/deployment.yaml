@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: fast-api
-        image: natanmish/online_learner:1758
+        image: natanmish/online_learner:0000
         ports:
         - containerPort: 8000
         volumeMounts:

@@ -55,7 +55,7 @@ kubectl apply -f online_learner_app/deployment.yaml
 minikube service fast-api-service
 ```
 12. In the streamlit_app.py file, update the IP address of the fastapi service
-13. Run the streamlit application
+13. Run the streamlit application(keep the terminal open)
 ```bash
 streamlit run streamlit_app.py
 ```

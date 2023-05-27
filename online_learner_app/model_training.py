@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import os
 
 
-def main(messages):
+def main(data_points):
     local_path = os.path.dirname(os.path.abspath(__file__))
 
     # check if model is available locally
@@ -21,9 +21,9 @@ def main(messages):
         metric = metrics.MAE()
         dataset = pd.DataFrame(columns=["x", "y"])
 
-    for msg in messages:
-        x = float(msg.split(",")[0])
-        y = float(msg.split(",")[1])
+    for data_point in data_points:
+        x = float(data_point.split(",")[0])
+        y = float(data_point.split(",")[1])
         dataset = pd.concat(
             [
                 dataset,
