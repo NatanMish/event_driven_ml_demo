@@ -66,7 +66,7 @@ def main():
         )
 
         result = requests.post(
-            "http://127.0.0.1:50814/data_points", json={"messages": messages_consumed}
+            "http://127.0.0.1:59193/data_points", json={"messages": messages_consumed}
         )
         print(result.text)
 
